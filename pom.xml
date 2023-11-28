@@ -139,7 +139,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Hi!t Consulting Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/hiit-consulting-fr/ms-parent</url>
+            <url>https://maven.pkg.github.com/hiit-consulting-fr/ms-common</url>
         </repository>
     </distributionManagement>
 
