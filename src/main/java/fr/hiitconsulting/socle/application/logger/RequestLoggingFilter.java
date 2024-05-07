@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hi!T Consulting
+ * Copyright (c) 2023-2024 Hi!T Consulting
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  *
  */
 
-package fr.hiitconsulting.socle.infrastructure.logger;
+package fr.hiitconsulting.socle.application.logger;
 
 import com.google.common.base.Stopwatch;
 import jakarta.servlet.FilterChain;

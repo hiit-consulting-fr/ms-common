@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hi!T Consulting
+ * Copyright (c) 2024 Hi!T Consulting
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,25 +23,28 @@
  *
  */
 
-package fr.hiitconsulting.socle.infrastructure.configuration;
+package fr.hiitconsulting.socle.application.configuration;
 
-import fr.hiitconsulting.socle.infrastructure.logger.RequestLoggingFilter;
-import lombok.extern.slf4j.Slf4j;
+import fr.hiitconsulting.socle.application.cache.CacheAnnotationInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.AbstractRequestLoggingFilter;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Slf4j
 @Configuration
-public class RequestLoggingFilterConfig {
+@RequiredArgsConstructor
+public class CacheConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CacheAnnotationInterceptor());
+    }
 
     @Bean
-    public AbstractRequestLoggingFilter logFilter() {
-        log.info("Initializing request logger");
-        RequestLoggingFilter filter = new RequestLoggingFilter();
-        filter.setIncludeQueryString(true);
-
-        return filter;
+    public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+        return new ShallowEtagHeaderFilter();
     }
 
 }
