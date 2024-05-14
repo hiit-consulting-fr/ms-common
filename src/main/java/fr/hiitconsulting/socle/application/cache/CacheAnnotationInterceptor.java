@@ -25,60 +25,60 @@
 
 package fr.hiitconsulting.socle.application.cache;
 
+import static org.springframework.http.HttpHeaders.CACHE_CONTROL;
+
 import fr.hiitconsulting.socle.application.annotation.CacheControl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.http.HttpHeaders.CACHE_CONTROL;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 public class CacheAnnotationInterceptor implements HandlerInterceptor {
 
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+      Object handler) {
 
-        if (handler instanceof HandlerMethod hm) {
+    if (handler instanceof HandlerMethod hm) {
 
-            handleCacheControlAnnotation(response, hm.getMethodAnnotation(CacheControl.class));
+      handleCacheControlAnnotation(response, hm.getMethodAnnotation(CacheControl.class));
 
-        }
-
-        return true;
     }
 
-    private void handleCacheControlAnnotation(HttpServletResponse response, CacheControl annotation) {
-        if (annotation == null) {
-            return;
-        }
+    return true;
+  }
 
-        List<String> headerValues = new ArrayList<>();
-        if (annotation.noCache()) {
-            headerValues.add("no-cache");
-
-            if (annotation.noStore()) {
-                headerValues.add("no-store");
-            }
-        } else {
-            if (annotation.privateCache()) {
-                headerValues.add("private");
-            }
-
-            if (annotation.maxAge() > 0) {
-                headerValues.add("max-age=" + annotation.maxAge());
-            }
-
-            if (annotation.staleWhileRevalidate() > 0) {
-                headerValues.add("stale-while-revalidate=" + annotation.staleWhileRevalidate());
-            }
-        }
-
-        response.setHeader(CACHE_CONTROL, String.join(", ", headerValues));
+  private void handleCacheControlAnnotation(HttpServletResponse response, CacheControl annotation) {
+    if (annotation == null) {
+      return;
     }
+
+    List<String> headerValues = new ArrayList<>();
+    if (annotation.noCache()) {
+      headerValues.add("no-cache");
+
+      if (annotation.noStore()) {
+        headerValues.add("no-store");
+      }
+    } else {
+      if (annotation.privateCache()) {
+        headerValues.add("private");
+      }
+
+      if (annotation.maxAge() > 0) {
+        headerValues.add("max-age=" + annotation.maxAge());
+      }
+
+      if (annotation.staleWhileRevalidate() > 0) {
+        headerValues.add("stale-while-revalidate=" + annotation.staleWhileRevalidate());
+      }
+    }
+
+    response.setHeader(CACHE_CONTROL, String.join(", ", headerValues));
+  }
 
 }
 

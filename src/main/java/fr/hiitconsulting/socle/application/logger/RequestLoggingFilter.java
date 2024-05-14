@@ -30,6 +30,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiElement;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -37,55 +38,57 @@ import org.springframework.boot.ansi.AnsiStyle;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
-import java.io.IOException;
-
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
-    @Override
-    protected boolean shouldLog(HttpServletRequest request) {
-        return logger.isInfoEnabled() && !request.getRequestURI().contains("actuator");
+  @Override
+  protected boolean shouldLog(HttpServletRequest request) {
+    return logger.isInfoEnabled() && !request.getRequestURI().contains("actuator");
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain)
+      throws ServletException, IOException {
+
+    boolean isFirstRequest = !isAsyncDispatch(request);
+    HttpServletRequest requestToUse = request;
+
+    if (isIncludePayload() && isFirstRequest
+        && !(request instanceof ContentCachingRequestWrapper)) {
+      requestToUse = new ContentCachingRequestWrapper(request, getMaxPayloadLength());
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-
-        boolean isFirstRequest = !isAsyncDispatch(request);
-        HttpServletRequest requestToUse = request;
-
-        if (isIncludePayload() && isFirstRequest && !(request instanceof ContentCachingRequestWrapper)) {
-            requestToUse = new ContentCachingRequestWrapper(request, getMaxPayloadLength());
-        }
-
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        try {
-            filterChain.doFilter(requestToUse, response);
-        } finally {
-            if (shouldLog(requestToUse) && !isAsyncStarted(requestToUse)) {
-                logger.info(createMessage(requestToUse, getMessagePrefix(response.getStatus(), stopwatch), ""));
-            }
-        }
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    try {
+      filterChain.doFilter(requestToUse, response);
+    } finally {
+      if (shouldLog(requestToUse) && !isAsyncStarted(requestToUse)) {
+        logger.info(
+            createMessage(requestToUse, getMessagePrefix(response.getStatus(), stopwatch), ""));
+      }
     }
+  }
 
-    private String getMessagePrefix(int status, Stopwatch stopwatch) {
-        AnsiElement e;
-        if (status >= 400 && status <= 499) {
-            e = AnsiColor.YELLOW;
-        } else if (status >= 500 && status <= 599) {
-            e = AnsiColor.RED;
-        } else {
-            e = AnsiColor.GREEN;
-        }
-        return AnsiOutput.toString(e, status) + " | " + AnsiOutput.toString(AnsiStyle.BOLD, stopwatch.toString()) +
-                " | ";
+  private String getMessagePrefix(int status, Stopwatch stopwatch) {
+    AnsiElement e;
+    if (status >= 400 && status <= 499) {
+      e = AnsiColor.YELLOW;
+    } else if (status >= 500 && status <= 599) {
+      e = AnsiColor.RED;
+    } else {
+      e = AnsiColor.GREEN;
     }
+    return AnsiOutput.toString(e, status) + " | " + AnsiOutput.toString(AnsiStyle.BOLD,
+        stopwatch.toString()) +
+        " | ";
+  }
 
-    @Override
-    protected void beforeRequest(HttpServletRequest request, String message) {
-    }
+  @Override
+  protected void beforeRequest(HttpServletRequest request, String message) {
+  }
 
-    @Override
-    protected void afterRequest(HttpServletRequest request, String message) {
-    }
+  @Override
+  protected void afterRequest(HttpServletRequest request, String message) {
+  }
 
 }

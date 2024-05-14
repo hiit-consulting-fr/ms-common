@@ -32,6 +32,6 @@ To use it, annotate a controller method with `@CacheControl` and specify the `ma
 @CacheControl(maxAge = 60)
 @GetMapping
 public String get() {
-    return "Hello";
+  return "Hello";
 }
 ```
