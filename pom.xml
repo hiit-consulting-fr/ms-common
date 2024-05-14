@@ -25,116 +25,116 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
-        <relativePath/>
-    </parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.5</version>
+    <relativePath/>
+  </parent>
 
-    <artifactId>ms-common</artifactId>
-    <groupId>fr.hiitconsulting</groupId>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>${project.artifactId}</name>
+  <artifactId>ms-common</artifactId>
+  <groupId>fr.hiitconsulting</groupId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
 
-    <licenses>
-        <license>
-            <name>MIT</name>
-        </license>
-    </licenses>
+  <licenses>
+    <license>
+      <name>MIT</name>
+    </license>
+  </licenses>
 
-    <scm>
-        <url>https://github.com/hiit-consulting-fr/ms-common</url>
-    </scm>
+  <scm>
+    <url>https://github.com/hiit-consulting-fr/ms-common</url>
+  </scm>
 
-    <issueManagement>
-        <url>https://github.com/hiit-consulting-fr/ms-common/issues</url>
-    </issueManagement>
+  <issueManagement>
+    <url>https://github.com/hiit-consulting-fr/ms-common/issues</url>
+  </issueManagement>
 
-    <ciManagement>
-        <url>https://github.com/hiit-consulting-fr/ms-common/actions</url>
-    </ciManagement>
+  <ciManagement>
+    <url>https://github.com/hiit-consulting-fr/ms-common/actions</url>
+  </ciManagement>
 
-    <organization>
-        <name>Hi!t Consulting</name>
-        <url>https://www.hiit-consulting.fr/</url>
-    </organization>
+  <organization>
+    <name>Hi!t Consulting</name>
+    <url>https://www.hiit-consulting.fr/</url>
+  </organization>
 
-    <properties>
-        <maven.compiler.release>21</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Dependency versions -->
-        <guava.version>33.2.0-jre</guava.version>
+    <!-- Dependency versions -->
+    <guava.version>33.2.0-jre</guava.version>
 
-        <!-- Plugin versions -->
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-    </properties>
+    <!-- Plugin versions -->
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+  </properties>
 
-    <dependencies>
+  <dependencies>
 
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
 
-        <!-- Others -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
+    <!-- Others -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
-        <!-- Tests -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+    <!-- Tests -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-    </dependencies>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Hi!t Consulting Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/hiit-consulting-fr/ms-common</url>
-        </repository>
-    </distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Hi!t Consulting Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/hiit-consulting-fr/ms-common</url>
+    </repository>
+  </distributionManagement>
 
 </project>

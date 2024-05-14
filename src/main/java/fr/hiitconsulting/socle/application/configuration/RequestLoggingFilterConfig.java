@@ -35,13 +35,13 @@ import org.springframework.web.filter.AbstractRequestLoggingFilter;
 @Configuration
 public class RequestLoggingFilterConfig {
 
-    @Bean
-    public AbstractRequestLoggingFilter logFilter() {
-        log.info("Initializing request logger");
-        RequestLoggingFilter filter = new RequestLoggingFilter();
-        filter.setIncludeQueryString(true);
+  @Bean
+  public AbstractRequestLoggingFilter logFilter() {
+    log.info("Initializing request logger");
+    RequestLoggingFilter filter = new RequestLoggingFilter();
+    filter.setIncludeQueryString(true);
 
-        return filter;
-    }
+    return filter;
+  }
 
 }

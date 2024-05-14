@@ -37,14 +37,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class CacheConfiguration implements WebMvcConfigurer {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CacheAnnotationInterceptor());
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new CacheAnnotationInterceptor());
+  }
 
-    @Bean
-    public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
-        return new ShallowEtagHeaderFilter();
-    }
+  @Bean
+  public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+    return new ShallowEtagHeaderFilter();
+  }
 
 }

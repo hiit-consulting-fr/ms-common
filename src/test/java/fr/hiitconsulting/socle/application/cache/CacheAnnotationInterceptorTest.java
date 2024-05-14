@@ -25,18 +25,6 @@
 
 package fr.hiitconsulting.socle.application.cache;
 
-import fr.hiitconsulting.socle.application.annotation.CacheControl;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.method.HandlerMethod;
-
-import java.lang.annotation.Annotation;
-
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.never;
@@ -44,107 +32,118 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.CACHE_CONTROL;
 
+import fr.hiitconsulting.socle.application.annotation.CacheControl;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.lang.annotation.Annotation;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.method.HandlerMethod;
+
 @ExtendWith(MockitoExtension.class)
 public class CacheAnnotationInterceptorTest {
 
-    @Mock
-    private HttpServletRequest request;
+  @Mock
+  private HttpServletRequest request;
 
-    @Mock
-    private HttpServletResponse response;
+  @Mock
+  private HttpServletResponse response;
 
-    @Mock
-    private HandlerMethod handlerMethod;
+  @Mock
+  private HandlerMethod handlerMethod;
 
-    @InjectMocks
-    private CacheAnnotationInterceptor interceptor;
+  @InjectMocks
+  private CacheAnnotationInterceptor interceptor;
 
-    @Test
-    public void shouldSetNoCacheAndNoStoreWhenAnnotationSpecifies() {
-        when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(new CacheControl() {
-            @Override
-            public Class<? extends Annotation> annotationType() {
-                return null;
-            }
+  @Test
+  public void shouldSetNoCacheAndNoStoreWhenAnnotationSpecifies() {
+    when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(new CacheControl() {
+      @Override
+      public Class<? extends Annotation> annotationType() {
+        return null;
+      }
 
-            @Override
-            public long maxAge() {
-                return 0;
-            }
+      @Override
+      public long maxAge() {
+        return 0;
+      }
 
-            @Override
-            public boolean noCache() {
-                return true;
-            }
+      @Override
+      public boolean noCache() {
+        return true;
+      }
 
-            @Override
-            public boolean noStore() {
-                return true;
-            }
+      @Override
+      public boolean noStore() {
+        return true;
+      }
 
-            @Override
-            public long staleWhileRevalidate() {
-                return 0;
-            }
+      @Override
+      public long staleWhileRevalidate() {
+        return 0;
+      }
 
-            @Override
-            public boolean privateCache() {
-                return false;
-            }
+      @Override
+      public boolean privateCache() {
+        return false;
+      }
 
-        });
+    });
 
-        interceptor.preHandle(request, response, handlerMethod);
+    interceptor.preHandle(request, response, handlerMethod);
 
-        verify(response).setHeader(CACHE_CONTROL, "no-cache, no-store");
-    }
+    verify(response).setHeader(CACHE_CONTROL, "no-cache, no-store");
+  }
 
-    @Test
-    public void shouldSetPrivateAndMaxAgeWhenAnnotationSpecifies() {
-        when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(new CacheControl() {
-            @Override
-            public Class<? extends Annotation> annotationType() {
-                return null;
-            }
+  @Test
+  public void shouldSetPrivateAndMaxAgeWhenAnnotationSpecifies() {
+    when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(new CacheControl() {
+      @Override
+      public Class<? extends Annotation> annotationType() {
+        return null;
+      }
 
-            @Override
-            public boolean privateCache() {
-                return true;
-            }
+      @Override
+      public boolean privateCache() {
+        return true;
+      }
 
-            @Override
-            public long maxAge() {
-                return 3600;
-            }
+      @Override
+      public long maxAge() {
+        return 3600;
+      }
 
-            @Override
-            public boolean noCache() {
-                return false;
-            }
+      @Override
+      public boolean noCache() {
+        return false;
+      }
 
-            @Override
-            public boolean noStore() {
-                return false;
-            }
+      @Override
+      public boolean noStore() {
+        return false;
+      }
 
-            @Override
-            public long staleWhileRevalidate() {
-                return 0;
-            }
+      @Override
+      public long staleWhileRevalidate() {
+        return 0;
+      }
 
-        });
+    });
 
-        interceptor.preHandle(request, response, handlerMethod);
+    interceptor.preHandle(request, response, handlerMethod);
 
-        verify(response).setHeader(CACHE_CONTROL, "private, max-age=3600");
-    }
+    verify(response).setHeader(CACHE_CONTROL, "private, max-age=3600");
+  }
 
-    @Test
-    public void shouldNotSetHeaderWhenAnnotationIsNotPresent() {
-        when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(null);
+  @Test
+  public void shouldNotSetHeaderWhenAnnotationIsNotPresent() {
+    when(handlerMethod.getMethodAnnotation(CacheControl.class)).thenReturn(null);
 
-        interceptor.preHandle(request, response, handlerMethod);
+    interceptor.preHandle(request, response, handlerMethod);
 
-        verify(response, never()).setHeader(eq(CACHE_CONTROL), anyString());
-    }
+    verify(response, never()).setHeader(eq(CACHE_CONTROL), anyString());
+  }
 }
