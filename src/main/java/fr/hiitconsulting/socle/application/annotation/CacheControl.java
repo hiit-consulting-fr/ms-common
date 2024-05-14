@@ -31,75 +31,74 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation permettant de gérer le header Cache-Control
+ * Annotation for managing the Cache-Control header
  *
  * <br><br>
- * L'en-tête HTTP Cache-Control contient des directives (c'est-à-dire des instructions),
- * dans les requêtes et dans les réponses, pour contrôler la mise en cache dans les navigateurs
- * et caches partagées (par exemple les proxies, CDN).
+ * The HTTP Cache-Control header contains directives (i.e., instructions),
+ * in requests and responses, to control caching in browsers
+ * and shared caches (e.g., proxies, CDNs).
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CacheControl {
-
     /**
-     * La directive de réponse max-age=N indique que la réponse reste fraîche jusqu'à N secondes après la génération de la réponse.
+     * The max-age=N response directive indicates that the response remains fresh until N seconds after the response is generated.
      * <br><br>
-     * Cela indique que les caches peuvent stocker cette réponse et la réutiliser pour les requêtes suivantes tant qu'elle est fraîche.
+     * This indicates that caches can store this response and reuse it for subsequent requests as long as it is fresh.
      * <br><br>
-     * On notera que max-age ne correspond pas au temps écoulé depuis que la réponse a été reçue,
-     * il s'agit du temps écoulé depuis que la réponse a été générée sur le serveur d'origine.
-     * Ainsi, si les autres caches situés sur la route réseau empruntée par la réponse stockent la réponse
-     * pendant 100 secondes (en l'indiquant avec l'en-tête de réponse Age), le cache du navigateur déduira
-     * 100 secondes de la durée de fraîcheur.
+     * Note that max-age does not correspond to the time elapsed since the response was received,
+     * it is the time elapsed since the response was generated on the original server.
+     * Thus, if other caches located on the network route taken by the response store the response
+     * for 100 seconds (indicating it with the Age response header), the browser cache will deduct
+     * 100 seconds from the freshness duration.
      */
     long maxAge() default 30;
 
     /**
-     * La directive de réponse no-cache indique que la réponse peut être stockée en cache, mais qu'elle doit être validée
-     * avec le serveur d'origine avant chaque réutilisation, même si le cache est déconnecté du serveur d'origine.
+     * The no-cache response directive indicates that the response can be cached, but must be validated
+     * with the original server before each reuse, even if the cache is disconnected from the original server.
      * <br><br>
-     * Si vous souhaitez que les caches vérifient leur contenu à chaque mise à jour tout en réutilisant du contenu stocké,
-     * no-cache est la directive à utiliser.
+     * If you want caches to check their content at each update while reusing stored content,
+     * no-cache is the directive to use.
      * <br><br>
-     * On notera que no-cache ne signifie pas « ne pas mettre en cache ».
-     * no-cache permet aux caches de stocker une réponse, mais impose une revalidation avant toute réutilisation.
-     * Si vous souhaitez effectivement ne pas stocker de données pour ne pas avoir de cache du tout,
-     * il faudra utiliser la directive no-store.
+     * Note that no-cache does not mean "do not cache".
+     * no-cache allows caches to store a response, but imposes a revalidation before any reuse.
+     * If you actually want to not store data to have no cache at all,
+     * you will need to use the no-store directive.
      */
     boolean noCache() default false;
 
     /**
-     * La directive de réponse no-store indique qu'aucun cache (partagé ou privé) ne doit stocker la réponse.
+     * The no-store response directive indicates that no cache (shared or private) should store the response.
      */
     boolean noStore() default false;
 
     /**
-     * La directive de réponse stale-while-revalidate indique que le cache peut réutiliser
-     * une réponse périmée pendant qu'il la revalide dans un cache.
+     * The stale-while-revalidate response directive indicates that the cache can reuse
+     * a stale response while it revalidates it in a cache.
      * <br><br>
      * ex:
      * <code>Cache-Control: max-age=604800, stale-while-revalidate=86400</code>
      * <br><br>
-     * Dans l'exemple qui précède, la réponse est fraîche pendant 7 jours (604800s).
-     * Après 7 jours, elle devient périmée, mais le cache peut être réutilisé pour les requêtes
-     * qui sont faites le jour suivant (86400s), tant que la revalidation de la réponse a lieu en arrière-plan.
+     * In the preceding example, the response is fresh for 7 days (604800s).
+     * After 7 days, it becomes stale, but the cache can be reused for requests
+     * made the following day (86400s), as long as the response revalidation takes place in the background.
      * <br><br>
-     * La revalidation rafraîchira le cache à nouveau et la réponse apparaîtra donc comme toujours fraîche
-     * aux clients pendant cette période, masquant ainsi la latence induite par une revalidation.
+     * The revalidation will refresh the cache again and the response will therefore appear as always fresh
+     * to clients during this period, thus masking the latency induced by a revalidation.
      * <br><br>
-     * Si aucune requête n'a lieu pendant cette période intermédiaire,
-     * le cache devient périmé et la prochaine requête revalidera le cache normalement.
+     * If no request takes place during this intermediate period,
+     * the cache becomes stale and the next request will revalidate the cache normally.
      */
     long staleWhileRevalidate() default 30;
 
     /**
-     * La directive de réponse private indique que la réponse peut uniquement être enregistrée dans un cache privé
-     * (c'est-à-dire le cache local des navigateurs).
+     * The private response directive indicates that the response can only be stored in a private cache
+     * (i.e., the local cache of browsers).
      * <br><br>
-     * Si private est oubliée pour une réponse avec du contenu personnalisé, cette réponse pourra être enregistrée
-     * dans un cache partagé et finir par être réutilisée pour plusieurs personnes,
-     * causant ainsi une fuite d'informations personnelles.
+     * If private is forgotten for a response with custom content, this response can be stored
+     * in a shared cache and end up being reused for several people,
+     * thus causing a leak of personal information.
      */
     boolean privateCache() default true;
 
