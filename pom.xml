@@ -2,7 +2,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2023 Hi!T Consulting
+  ~ Copyright (c) 2023-2024 Hi!T Consulting
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -69,9 +69,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency versions -->
-        <logback.version>1.4.14</logback.version>
         <guava.version>33.2.0-jre</guava.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
 
         <!-- Plugin versions -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
