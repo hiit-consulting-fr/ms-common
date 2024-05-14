@@ -17,17 +17,17 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version: 21
-          distribution: 'temurin'
-          cache: maven
+    - uses: actions/setup-java@v4
+      with:
+        java-version: 21
+        distribution: 'temurin'
+        cache: maven
 
-      - name: Maven build & test
-        run: >-
-          mvn clean verify --no-transfer-progress
+    - name: Maven build & test
+      run: >-
+        mvn clean verify
 
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@v4.0.3
+    - name: Update dependency graph
+      uses: advanced-security/maven-dependency-submission-action@v4.0.3
