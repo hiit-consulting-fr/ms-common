@@ -69,7 +69,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Dependency versions -->
-    <guava.version>33.4.7-jre</guava.version>
+    <guava.version>33.4.8-jre</guava.version>
 
     <!-- Plugin versions -->
     <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
