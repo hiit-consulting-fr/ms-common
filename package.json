@@ -4,16 +4,13 @@
   "author": "hiit-consulting",
   "license": "MIT",
   "homepage": "https://github.com/hiit-consulting-fr/ms-parent#readme",
-  "scripts": {
-    "prepare": "husky install"
-  },
   "devDependencies": {
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "husky": "9.1.7"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@10.20.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }
