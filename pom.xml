@@ -72,6 +72,7 @@
     <guava.version>33.5.0-jre</guava.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <spring-boot.version>3.5.7</spring-boot.version>
+    <swagger-core-jakarta.version>2.2.40</swagger-core-jakarta.version>
 
     <!-- Plugin versions -->
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
@@ -108,6 +109,11 @@
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${mapstruct.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-core-jakarta</artifactId>
+      <version>${swagger-core-jakarta.version}</version>
     </dependency>
 
     <!-- Tests -->
