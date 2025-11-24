@@ -74,7 +74,7 @@
     <jspecify.version>1.0.0</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <spring-boot.version>3.5.7</spring-boot.version>
-    <swagger-core-jakarta.version>2.2.40</swagger-core-jakarta.version>
+    <swagger-core-jakarta.version>2.2.41</swagger-core-jakarta.version>
 
     <!-- Plugin versions -->
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
