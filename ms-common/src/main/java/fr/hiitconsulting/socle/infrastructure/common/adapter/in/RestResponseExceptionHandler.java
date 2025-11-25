@@ -28,10 +28,12 @@ package fr.hiitconsulting.socle.infrastructure.common.adapter.in;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import fr.hiitconsulting.socle.domain.shared.exception.AbstractBadRequestException;
 import fr.hiitconsulting.socle.domain.shared.exception.AbstractForbiddenException;
 import fr.hiitconsulting.socle.domain.shared.exception.AbstractNotFoundException;
+import fr.hiitconsulting.socle.domain.shared.exception.AbstractUnauthorizedException;
 import fr.hiitconsulting.socle.infrastructure.common.adapter.in.dto.ErrorMessageQuery;
 import fr.hiitconsulting.socle.infrastructure.common.adapter.in.dto.FieldErrorQuery;
 import java.util.Collection;
@@ -59,6 +61,14 @@ public class RestResponseExceptionHandler {
       AbstractForbiddenException exception) {
     return ResponseEntity
         .status(FORBIDDEN)
+        .body(new ErrorMessageQuery(exception.getMessage(), null));
+  }
+
+  @ExceptionHandler(AbstractUnauthorizedException.class)
+  public ResponseEntity<ErrorMessageQuery> handleUnauthorizedException(
+      AbstractUnauthorizedException exception) {
+    return ResponseEntity
+        .status(UNAUTHORIZED)
         .body(new ErrorMessageQuery(exception.getMessage(), null));
   }
 
