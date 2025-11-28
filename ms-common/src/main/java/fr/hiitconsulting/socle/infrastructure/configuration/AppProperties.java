@@ -25,30 +25,31 @@
 
 package fr.hiitconsulting.socle.infrastructure.configuration;
 
-import fr.hiitconsulting.socle.infrastructure.common.adapter.in.RequestLoggingFilter;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import org.jspecify.annotations.NullMarked;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.filter.AbstractRequestLoggingFilter;
+import org.jspecify.annotations.Nullable;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.annotation.Validated;
 
-@Slf4j
+@Data
 @NullMarked
-@ComponentScan("fr.hiitconsulting.socle.infrastructure")
-public class MsCommonAutoConfiguration {
+@Validated
+@Configuration
+@ConfigurationProperties("app")
+public class AppProperties {
 
-  @Bean
-  CacheConfiguration cacheConfiguration() {
-    return new CacheConfiguration();
-  }
+  @Valid
+  @Nullable
+  private RequestLogging requestLogging;
 
-  @Bean
-  AbstractRequestLoggingFilter logFilter(AppProperties appProperties) {
-    log.info("Initializing request logger");
-    RequestLoggingFilter filter = new RequestLoggingFilter(appProperties);
-    filter.setIncludeQueryString(true);
+  @Data
+  public static class RequestLogging {
 
-    return filter;
+    @NotBlank
+    private String exclusionPattern;
   }
 
 }
