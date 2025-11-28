@@ -26,12 +26,17 @@
 package fr.hiitconsulting.socle.infrastructure.common.adapter.in;
 
 import com.google.common.base.Stopwatch;
+import fr.hiitconsulting.socle.infrastructure.configuration.AppProperties;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Pattern;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiElement;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -40,11 +45,25 @@ import org.springframework.web.filter.AbstractRequestLoggingFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @NullMarked
+@RequiredArgsConstructor
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
+
+  private final AppProperties appProperties;
+  @Nullable
+  private Pattern exclusionPattern;
+
+  @PostConstruct
+  void postConstruct() {
+    if (appProperties.getRequestLogging() != null) {
+      exclusionPattern = Pattern.compile(appProperties.getRequestLogging().getExclusionPattern());
+    }
+  }
 
   @Override
   protected boolean shouldLog(HttpServletRequest request) {
-    return logger.isInfoEnabled() && !request.getRequestURI().contains("actuator");
+    return logger.isInfoEnabled() &&
+        !request.getRequestURI().contains("actuator") &&
+        (exclusionPattern == null || !exclusionPattern.matcher(request.getRequestURI()).matches());
   }
 
   @Override
