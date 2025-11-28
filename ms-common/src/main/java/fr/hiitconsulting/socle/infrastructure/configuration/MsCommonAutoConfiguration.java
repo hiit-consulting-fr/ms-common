@@ -30,10 +30,12 @@ import fr.hiitconsulting.socle.infrastructure.common.adapter.in.RestResponseExce
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
 @Slf4j
 @NullMarked
+@ComponentScan("fr.hiitconsulting.socle.infrastructure.common.adapter.in")
 public class MsCommonAutoConfiguration {
 
   @Bean

@@ -29,13 +29,11 @@ import fr.hiitconsulting.socle.infrastructure.common.adapter.in.CacheAnnotationI
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @NullMarked
-@Configuration
 @RequiredArgsConstructor
 public class CacheConfiguration implements WebMvcConfigurer {
 
