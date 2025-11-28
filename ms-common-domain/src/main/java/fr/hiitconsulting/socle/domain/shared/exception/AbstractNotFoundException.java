@@ -31,7 +31,7 @@ import org.jspecify.annotations.NullMarked;
 public class AbstractNotFoundException extends Exception {
 
   public AbstractNotFoundException(String beanName, String id) {
-    super(beanName + " " + id + " n'existe pas");
+    super(beanName + " avec la référence " + id + " n'existe pas");
   }
 
 }

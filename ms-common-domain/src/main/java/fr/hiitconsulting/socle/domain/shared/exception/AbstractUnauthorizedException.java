@@ -34,4 +34,8 @@ public class AbstractUnauthorizedException extends Exception {
     super(message);
   }
 
+  public AbstractUnauthorizedException(String message, Throwable cause) {
+    super(message, cause);
+  }
+
 }

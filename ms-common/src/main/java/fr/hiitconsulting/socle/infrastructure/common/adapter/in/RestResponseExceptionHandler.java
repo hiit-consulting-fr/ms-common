@@ -43,9 +43,11 @@ import java.util.Optional;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @NullMarked
+@ControllerAdvice
 public class RestResponseExceptionHandler {
 
   @ExceptionHandler(AbstractNotFoundException.class)
