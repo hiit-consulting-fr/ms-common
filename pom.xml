@@ -73,7 +73,7 @@
     <guava.version>33.5.0-jre</guava.version>
     <jspecify.version>1.0.0</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
-    <spring-boot.version>4.0.1</spring-boot.version>
+    <spring-boot.version>4.0.2</spring-boot.version>
     <swagger-core-jakarta.version>2.2.42</swagger-core-jakarta.version>
 
     <!-- Plugin versions -->
